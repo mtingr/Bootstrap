@@ -1,0 +1,58 @@
+### https://algha.east-end-waterway-group.uk/ GOOD WORKING
+##  admin pword Y(Jhat444cb
+version: "3.1"
+
+services:
+  db:
+    container_name: algha-3-db
+    hostname: algha-3-web-db
+    environment:
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_RANDOM_ROOT_PASSWORD: ${ROOT_PASSWORD}
+      MYSQL_USER: ${DB_USER}
+    image: mariadb:latest
+    restart: always
+    volumes:
+      - "/home/docker/algha-3/database:/var/lib/mysql"
+  wordpress:
+    container_name: algha-3-app
+    hostname: algha-3-web-app
+    environment:
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_NAME: ${DB_NAME}
+      WORDPRESS_DB_PASSWORD: ${DB_PASSWORD}
+      WORDPRESS_DB_USER: ${DB_USER}
+    image: wordpress:latest
+    ports:
+      - "36001:80"
+    restart: always
+    volumes:
+      - "/home/docker/algha-3/html:/var/www/html"
+
+
+  phpmyadmin:
+    image: lscr.io/linuxserver/phpmyadmin:latest
+    container_name: php-algha-3-2
+    hostname: php-algha-3
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/London
+      - PMA_ARBITRARY=1 #optional
+      - PMA_ABSOLUTE_URI=https://algha-3-php-admin.mt-bits.co.uk #optional
+    volumes:
+      - /home/docker/algha-3/phpadmin:/var/www/phpadmin
+    ports:
+      - 37001:80
+    restart: unless-stopped
+
+volumes:
+  db: ~
+  wordpress: ~
+
+#DB_NAME=algha-3DB-2
+#DB_PASSWORD=Pass-6s!ty%%wq3q
+#DB_USER=User-algha-3-44rt0563h
+#ROOT_PASSWORD=SdsaifRrhjhjh5erer5
+# admin  Y(Jhat444cb
